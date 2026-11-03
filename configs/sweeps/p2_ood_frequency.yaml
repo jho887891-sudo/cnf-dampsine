@@ -4,6 +4,8 @@ base:
   collocation_interior: 31
   dense_points: 2048
   noise: 0.0
+  heldout_no_training: true
+  selected_methods: fourier
 sample_count: 20
 runs:
   - {seed: 42, omega_range_pi: [5, 6]}

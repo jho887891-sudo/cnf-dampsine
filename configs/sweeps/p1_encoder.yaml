@@ -1,0 +1,9 @@
+base:
+  seed: 42
+  selected_methods: cnf_gaussian
+  collocation_interior: 31
+runs:
+  - {methods: {cnf_gaussian: {identity_encoder: true}}}
+  - {methods: {cnf_gaussian: {n_freqs: 1}}}
+  - {methods: {cnf_gaussian: {n_freqs: 3}}}
+  - {methods: {cnf_gaussian: {n_freqs: 5}}}

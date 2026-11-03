@@ -10,7 +10,12 @@ from solvers.differentiable_solve import solve_coefficients
 
 def train_cnf_sample(model, sample, x_interior, *, steps=5000, lr=1e-3,
                      condition_weight=1e-6, patience=500, boundary_mode='dirichlet'):
-    optimizer = torch.optim.Adam((p for p in model.basis.parameters() if p.requires_grad), lr=lr)
+    parameters = [p for p in model.basis.parameters() if p.requires_grad]
+    if not parameters:
+        beta, diagnostics = model.solve_beta(sample, x_interior, boundary_mode)
+        data = float((model(sample['x_obs'], beta) - (sample['y_obs'] - sample['b'])).square().mean())
+        return model, [{'step': 0, 'total': data, 'data': data, **diagnostics}]
+    optimizer = torch.optim.Adam(parameters, lr=lr)
     best, stale, history, best_state = math.inf, 0, [], None
     for step in range(steps):
         optimizer.zero_grad()

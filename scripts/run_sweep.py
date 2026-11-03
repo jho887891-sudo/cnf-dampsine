@@ -22,6 +22,7 @@ def run_sweep(suite, config_path, output_root='results/sweeps', steps_override=N
         for j in range(sample_count):
             merged = dict(spec.get('base', {}), **params)
             merged['seed'] = merged.get('seed', 42) + j
+            merged.setdefault('device', 'auto')
             run_id = f'{suite}_{i:03d}_sample{j:03d}'
             path = Path(output_root) / f'{run_id}.yaml'
             path.parent.mkdir(parents=True, exist_ok=True)

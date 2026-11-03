@@ -4,5 +4,10 @@ base:
   collocation_interior: 31
   dense_points: 2048
   noise: 0.0
-runs: []
-# Add explicit non-training gamma_range entries before running this suite.
+  omega_range_pi: [6, 8]
+  heldout_no_training: true
+  selected_methods: fourier
+sample_count: 20
+runs:
+  - {seed: 10042, gamma_range: [1.0, 1.5], cohort: low_gamma_ood}
+  - {seed: 20042, gamma_range: [4.5, 5.0], cohort: high_gamma_ood}

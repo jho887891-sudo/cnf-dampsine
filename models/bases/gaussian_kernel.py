@@ -23,13 +23,14 @@ class PositionalEncoder(nn.Module):
 
 
 class GaussianKernelBasis(nn.Module):
-    def __init__(self, anchors, sigma=0.05, n_freqs=3, learn_sigma=False):
+    def __init__(self, anchors, sigma=0.05, n_freqs=3, learn_sigma=False,
+                 identity_encoder=False):
         super().__init__()
         if anchors.ndim != 2 or anchors.shape[1] != 1 or torch.unique(anchors).numel() != anchors.shape[0]:
             raise ValueError('Gaussian anchors must be distinct [K,1] points')
         self.register_buffer('anchors', anchors.clone())
         self.sigma = nn.Parameter(torch.tensor(float(sigma), dtype=anchors.dtype), requires_grad=learn_sigma)
-        self.encoder = PositionalEncoder(n_freqs).to(dtype=anchors.dtype)
+        self.encoder = (nn.Identity() if identity_encoder else PositionalEncoder(n_freqs).to(dtype=anchors.dtype))
 
     def forward(self, x):
         centers = self.encoder(self.anchors)

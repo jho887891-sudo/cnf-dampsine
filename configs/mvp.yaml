@@ -1,4 +1,5 @@
 seed: 42
+device: auto
 sensors: 128
 observations: 32
 collocation_interior: 31
