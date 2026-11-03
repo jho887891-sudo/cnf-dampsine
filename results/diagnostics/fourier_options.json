@@ -1,0 +1,44 @@
+{
+  "seed": 42,
+  "harmonics": 16,
+  "collocation_interior": 31,
+  "condition_number": 56071050884.34736,
+  "options": {
+    "A_direct": {
+      "solver_residual": 1.037635993263149e-12,
+      "backward_error": 1.0856408185524309e-16,
+      "condition_number": 56071050884.34736
+    },
+    "B_row_normalised": {
+      "condition_number_row_normalised": 56572824500.77563,
+      "note": "diagnostic only, not a substitute for the SPEC condition number"
+    },
+    "C_qr_svd": {
+      "qr_beta_relative_difference": 2.792890764166327e-07,
+      "svd_beta_relative_difference": 2.5161120735980027e-06,
+      "equilibrated_beta_relative_difference": 1.339312189493758e-07,
+      "prediction_relative_difference": 9.318137952635006e-15,
+      "note": "QR/SVD used for diagnosis only"
+    },
+    "D_frequency_step": [
+      {
+        "frequency_step": 1.5707963267948966,
+        "condition_number": 4.738034165951351e+16,
+        "rmse": 9.376778744884224e-13,
+        "dense_ode_rms": 4.0621671729577164e-11
+      },
+      {
+        "frequency_step": 3.141592653589793,
+        "condition_number": 56071050884.34736,
+        "rmse": 1.3272195175042773e-13,
+        "dense_ode_rms": 6.298931899956981e-10
+      },
+      {
+        "frequency_step": 6.283185307179586,
+        "condition_number": 6.935737686462171e+18,
+        "rmse": 15288340825910.154,
+        "dense_ode_rms": 5.015142987854606e+16
+      }
+    ]
+  }
+}

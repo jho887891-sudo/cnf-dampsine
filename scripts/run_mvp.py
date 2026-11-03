@@ -18,6 +18,7 @@ import yaml
 
 from data.generator import generate_sample
 from evaluation.metrics import evaluate_prediction
+from solvers.diagnostics import condition_status
 from models.bases.fourier_basis import FourierBasis
 from models.bases.gaussian_kernel import GaussianKernelBasis
 from models.bases.hypernet_siren import HypernetSirenBasis
@@ -142,11 +143,19 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
             metrics, dense_residual = evaluate_prediction(model, sample, grid, prediction, beta)
             truth = sample['A'] * torch.exp(-sample['gamma']*grid) * torch.sin(sample['omega']*grid) + sample['b']
             condition = diagnostics.get('condition_number')
-            status = ('infeasible' if diagnostics.get('hard_feasible') is False else
-                      'numerical_failure' if condition is not None and (not np.isfinite(condition) or condition > 1e10) else 'ok')
+            condition_state = diagnostics.get('condition_status') or condition_status(condition)
+            if diagnostics.get('solver_ok') is False:
+                status = 'failed'
+            elif diagnostics.get('hard_feasible') is False:
+                status = 'infeasible'
+            elif condition_state in ('unstable', 'severe'):
+                status = 'numerical_failure'
+            else:
+                status = 'ok'
             record.update(status=status, **metrics, **diagnostics,
                           total_time_seconds=time.perf_counter() - started,
                           parameter_count=sum(p.numel() for p in model.parameters()))
+            record['condition_status'] = condition_state
             np.savez_compressed(run_dir / 'predictions.npz', x=grid.cpu().numpy(), y_true=truth.detach().cpu().numpy(),
                                 y_pred=prediction.detach().cpu().numpy(), dense_ode_residual=dense_residual.cpu().numpy(),
                                 x_obs=sample['x_obs'].cpu().numpy(), y_obs=sample['y_obs'].cpu().numpy())

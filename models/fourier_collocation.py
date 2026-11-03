@@ -1,5 +1,6 @@
 """Direct Fourier collocation baseline without training."""
 
+import math
 import time
 
 import torch
@@ -8,7 +9,11 @@ from torch import nn
 from models.bases.fourier_basis import FourierBasis
 from physics.constraints import build_hard_constraint_system
 from solvers.differentiable_solve import equilibrated_matrix, solve_coefficients
+from solvers.diagnostics import linear_system_diagnostics
 from solvers.rectangular import solve_rectangular
+
+# Row-only scaling used for the SPEC diagnostics experiment, never for the main solve.
+from solvers.differentiable_solve import equilibration_factors
 
 
 class FourierCollocation(nn.Module):
@@ -34,20 +39,26 @@ class FourierCollocation(nn.Module):
             beta, rectangle = solve_coefficients(matrix, rhs, equilibrate=equilibrate), {}
         elapsed = time.perf_counter() - start
         residual = matrix @ beta - rhs
-        condition_raw = torch.linalg.cond(matrix).item()
-        condition_equilibrated = torch.linalg.cond(equilibrated_matrix(matrix)).item()
-        eps = torch.finfo(matrix.dtype).eps
-        return beta, {'solver_residual': torch.linalg.vector_norm(residual).item(),
-                      'condition_number': condition_raw,
-                      'condition_number_equilibrated': condition_equilibrated,
-                      'condition_error_bound': condition_raw * eps,
-                      'condition_error_bound_equilibrated': condition_equilibrated * eps,
-                      'equilibrated_solve': bool(equilibrate),
-                      'rank': int(torch.linalg.matrix_rank(matrix).item()),
-                      'singular_values': torch.linalg.svdvals(matrix).detach().tolist(),
-                      'hard_residual_max': float(residual.abs().max()),
-                      'collocation_ode_rms': float(residual[:-2].square().mean().sqrt()),
-                      'solver_time_seconds': elapsed, **rectangle}
+        diagnostics = linear_system_diagnostics(matrix, rhs, beta)
+        scale_info = self._conditioning_variants(matrix)
+        finite_residual = diagnostics['residual_finite']
+        diagnostics.update(
+            solver_time_seconds=elapsed,
+            equilibrated_solve=bool(equilibrate),
+            hard_residual_max=float(residual.abs().max()) if finite_residual else float('nan'),
+            collocation_ode_rms=float(residual[:-2].square().mean().sqrt()) if finite_residual else float('nan'),
+            **scale_info, **rectangle)
+        return beta, diagnostics
+
+    @staticmethod
+    def _conditioning_variants(matrix):
+        """Row-only and row+column scaled conditions, diagnostics only."""
+        if not bool(torch.isfinite(matrix).all()):
+            return {'condition_number_row_normalised': float('nan'),
+                    'condition_number_equilibrated': float('nan')}
+        row, _ = equilibration_factors(matrix)
+        return {'condition_number_row_normalised': float(torch.linalg.cond(matrix / row).item()),
+                'condition_number_equilibrated': float(torch.linalg.cond(equilibrated_matrix(matrix)).item())}
 
     def predict(self, x, beta, offset=0.0):
         return self.basis(x) @ beta + offset

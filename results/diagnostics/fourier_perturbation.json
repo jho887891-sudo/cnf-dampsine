@@ -1,0 +1,312 @@
+[
+  {
+    "seed": 42,
+    "harmonics": 16,
+    "collocation_interior": 31,
+    "condition_number": 56071050884.34736,
+    "cases": [
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 0.002032214440903426,
+        "beta_relative_change_max": 0.006263406188083359,
+        "prediction_relative_change_median": 1.8308809917332686e-08,
+        "prediction_relative_change_max": 2.1613569770103363e-08
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 6.462478172219874e-08,
+        "beta_relative_change_max": 7.25829145241992e-08,
+        "prediction_relative_change_median": 6.944497016536051e-14,
+        "prediction_relative_change_max": 1.8584263734911335e-13
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 0.3540695111547222,
+        "beta_relative_change_max": 0.7620510058376003,
+        "prediction_relative_change_median": 1.1283051217089883e-06,
+        "prediction_relative_change_max": 2.6014592147061363e-06
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 4.504087584913685e-06,
+        "beta_relative_change_max": 5.017316700820791e-06,
+        "prediction_relative_change_median": 2.6813097869508146e-12,
+        "prediction_relative_change_max": 3.069390575933354e-11
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 1.940361621920155,
+        "beta_relative_change_max": 5.062844807216606,
+        "prediction_relative_change_median": 8.28121506215786e-05,
+        "prediction_relative_change_max": 0.0007971855458757393
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 9.086624715448443e-05,
+        "beta_relative_change_max": 0.00018566559593453672,
+        "prediction_relative_change_median": 1.7264724499258001e-09,
+        "prediction_relative_change_max": 2.050333187195053e-09
+      }
+    ]
+  },
+  {
+    "seed": 123,
+    "harmonics": 16,
+    "collocation_interior": 31,
+    "condition_number": 53058766773.96609,
+    "cases": [
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 0.0023081358201526825,
+        "beta_relative_change_max": 0.0038245830248805146,
+        "prediction_relative_change_median": 7.941974573294865e-09,
+        "prediction_relative_change_max": 1.543416804712831e-08
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 2.7102322573750502e-08,
+        "beta_relative_change_max": 7.513126969049391e-08,
+        "prediction_relative_change_median": 1.3423086819927406e-13,
+        "prediction_relative_change_max": 2.547265955002727e-13
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 0.21163971937633105,
+        "beta_relative_change_max": 1.8371569067596185,
+        "prediction_relative_change_median": 1.8714963987465391e-06,
+        "prediction_relative_change_max": 2.1675806704339652e-06
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 2.545610592713866e-06,
+        "beta_relative_change_max": 4.754704542886403e-06,
+        "prediction_relative_change_median": 1.2085504161804657e-11,
+        "prediction_relative_change_max": 3.445848067220203e-11
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 1.6598687406983321,
+        "beta_relative_change_max": 2.8497338206197447,
+        "prediction_relative_change_median": 0.0001203586000174793,
+        "prediction_relative_change_max": 0.00017697009010707998
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 0.0002177480867362034,
+        "beta_relative_change_max": 0.0006715508965355941,
+        "prediction_relative_change_median": 6.383484243664148e-10,
+        "prediction_relative_change_max": 2.0432592445219658e-09
+      }
+    ]
+  },
+  {
+    "seed": 2026,
+    "harmonics": 16,
+    "collocation_interior": 31,
+    "condition_number": 56564474147.96941,
+    "cases": [
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 0.0025790754013404285,
+        "beta_relative_change_max": 0.005938460616976468,
+        "prediction_relative_change_median": 1.499693112319054e-08,
+        "prediction_relative_change_max": 1.0951963352030763e-07
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 5.067525445923616e-09,
+        "beta_relative_change_max": 6.691923498329956e-09,
+        "prediction_relative_change_median": 1.44365839190231e-13,
+        "prediction_relative_change_max": 1.983868826145255e-13
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 0.4070605868269762,
+        "beta_relative_change_max": 1.099099569421603,
+        "prediction_relative_change_median": 9.213361446670308e-06,
+        "prediction_relative_change_max": 2.784954179901278e-05
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 5.552398533225081e-07,
+        "beta_relative_change_max": 8.464943326248047e-07,
+        "prediction_relative_change_median": 7.790591706238472e-12,
+        "prediction_relative_change_max": 9.021046094563458e-12
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 1.4622230002390268,
+        "beta_relative_change_max": 22.878867154695694,
+        "prediction_relative_change_median": 0.0006136334678019053,
+        "prediction_relative_change_max": 0.029539564750323998
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 2.828236930704362e-05,
+        "beta_relative_change_max": 4.1079339405353016e-05,
+        "prediction_relative_change_median": 6.008618916201669e-10,
+        "prediction_relative_change_max": 3.298329219444672e-09
+      }
+    ]
+  },
+  {
+    "seed": 3407,
+    "harmonics": 16,
+    "collocation_interior": 31,
+    "condition_number": 53074203672.26946,
+    "cases": [
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 0.0010643733048882314,
+        "beta_relative_change_max": 0.003679943474065808,
+        "prediction_relative_change_median": 1.6936574285205653e-08,
+        "prediction_relative_change_max": 3.115267638656673e-08
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 1.585179238216825e-08,
+        "beta_relative_change_max": 1.9364248234010233e-08,
+        "prediction_relative_change_median": 1.7440046460818738e-13,
+        "prediction_relative_change_max": 3.188276302484823e-13
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 0.2933987437013871,
+        "beta_relative_change_max": 0.7255879055691522,
+        "prediction_relative_change_median": 3.2472570527681482e-06,
+        "prediction_relative_change_max": 5.729950983874546e-06
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 1.3584511776969961e-06,
+        "beta_relative_change_max": 3.2070953084993315e-06,
+        "prediction_relative_change_median": 1.9168616816872913e-12,
+        "prediction_relative_change_max": 3.0769505350753576e-11
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 1.7256487058345478,
+        "beta_relative_change_max": 9.373167337764645,
+        "prediction_relative_change_median": 0.0003325671689183242,
+        "prediction_relative_change_max": 0.0029706827476770666
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 0.0001640689942335327,
+        "beta_relative_change_max": 0.0003366298599026131,
+        "prediction_relative_change_median": 9.148865513730804e-10,
+        "prediction_relative_change_max": 4.037141838991007e-09
+      }
+    ]
+  },
+  {
+    "seed": 7777,
+    "harmonics": 16,
+    "collocation_interior": 31,
+    "condition_number": 53156240087.36879,
+    "cases": [
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 0.003153454600323807,
+        "beta_relative_change_max": 0.008595559701203312,
+        "prediction_relative_change_median": 5.644851949515973e-08,
+        "prediction_relative_change_max": 1.2275666668862005e-07
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-12,
+        "draws": 5,
+        "beta_relative_change_median": 2.865727127646031e-09,
+        "beta_relative_change_max": 9.01174832869917e-09,
+        "prediction_relative_change_median": 7.208209893137015e-14,
+        "prediction_relative_change_max": 1.6426283224505447e-13
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 0.2068352459026578,
+        "beta_relative_change_max": 0.46366275967499226,
+        "prediction_relative_change_median": 5.7509811220903975e-06,
+        "prediction_relative_change_max": 1.4682350515586551e-05
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-10,
+        "draws": 5,
+        "beta_relative_change_median": 6.764705030611341e-07,
+        "beta_relative_change_max": 1.4420839082178052e-06,
+        "prediction_relative_change_median": 7.406413536808066e-12,
+        "prediction_relative_change_max": 4.19880060411954e-11
+      },
+      {
+        "mode": "matrix",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 2.4909763877867617,
+        "beta_relative_change_max": 3.178213102857875,
+        "prediction_relative_change_median": 0.0003198825601814869,
+        "prediction_relative_change_max": 0.002209982909277753
+      },
+      {
+        "mode": "rhs",
+        "relative_perturbation": 1e-08,
+        "draws": 5,
+        "beta_relative_change_median": 9.92574399316451e-05,
+        "beta_relative_change_max": 0.00016243596366609733,
+        "prediction_relative_change_median": 8.750893477959466e-10,
+        "prediction_relative_change_max": 2.6063545189114143e-09
+      }
+    ]
+  }
+]
