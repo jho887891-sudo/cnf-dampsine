@@ -95,7 +95,8 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
                 if frequency_step == 'pi':
                     frequency_step = math.pi
                 model = FourierCollocation(harmonics=(k-1)//2,
-                    frequency_step=frequency_step).to(device)
+                    frequency_step=frequency_step,
+                    equilibrate=method_config.get('equilibrate', False)).to(device)
                 beta, diagnostics = model.solve(sample, collocation,
                     rectangular_extension=config.get('rectangular_extension', False), boundary_mode=boundary_mode)
                 prediction = model.predict(grid, beta, sample['b'])

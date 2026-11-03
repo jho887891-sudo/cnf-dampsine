@@ -27,6 +27,7 @@ methods:
   fourier:
     harmonics: 16
     frequency_step: pi
+    equilibrate: true
   siren_pinn:
     width: 64
     hidden_layers: 3
