@@ -1,0 +1,7 @@
+base:
+  seed: 42
+  selected_methods: cnf_siren
+  collocation_interior: 31
+runs:
+  - {methods: {cnf_siren: {basis: hypernet_siren}}}
+  - {methods: {cnf_siren: {basis: sepbasis_siren}}}

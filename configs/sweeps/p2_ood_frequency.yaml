@@ -1,0 +1,10 @@
+base:
+  sensors: 128
+  observations: 32
+  collocation_interior: 31
+  dense_points: 2048
+  noise: 0.0
+sample_count: 20
+runs:
+  - {seed: 42, omega_range_pi: [5, 6]}
+  - {seed: 42, omega_range_pi: [8, 9]}

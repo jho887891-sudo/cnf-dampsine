@@ -1,0 +1,11 @@
+base:
+  seed: 42
+  sensors: 128
+  observations: 32
+  collocation_interior: 31
+  basis_count: 33
+  selected_methods: cnf_gaussian,cnf_siren,fourier
+runs:
+  - {point_layout: uniform}
+  - {point_layout: random}
+  - {point_layout: chebyshev}

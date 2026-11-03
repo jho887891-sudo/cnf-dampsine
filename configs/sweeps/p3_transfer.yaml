@@ -1,0 +1,5 @@
+train_count: 800
+test_count: 100
+split_seed: 42
+steps_per_curve: 5000
+methods: [cnf_gaussian, cnf_siren]

@@ -1,0 +1,9 @@
+base:
+  seed: 42
+  collocation_interior: 31
+  selected_methods: cnf_siren,siren_pinn
+runs:
+  - {methods: {cnf_siren: {omega0: 10}, siren_pinn: {omega0: 10}}}
+  - {methods: {cnf_siren: {omega0: 20}, siren_pinn: {omega0: 20}}}
+  - {methods: {cnf_siren: {omega0: 30}, siren_pinn: {omega0: 30}}}
+  - {methods: {cnf_siren: {omega0: 40}, siren_pinn: {omega0: 40}}}

@@ -1,0 +1,12 @@
+base:
+  seed: 42
+  sensors: 128
+  observations: 32
+  dense_points: 2048
+  basis_count: 33
+  selected_methods: fourier
+  rectangular_extension: true
+runs:
+  - {collocation_interior: 15}
+  - {collocation_interior: 31}
+  - {collocation_interior: 63}

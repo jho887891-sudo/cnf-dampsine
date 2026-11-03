@@ -1,0 +1,7 @@
+method: fourier
+basis: fixed_fourier
+K: 33
+M: 31
+harmonics: 16
+frequency_step: pi
+solver: direct_square

@@ -1,0 +1,11 @@
+method: cnf_gaussian
+basis: kernel
+K: 33
+M: 31
+sigma: 0.05
+learn_sigma: false
+n_freqs: 3
+lr: 0.001
+steps: 5000
+patience: 500
+condition_weight: 0.000001

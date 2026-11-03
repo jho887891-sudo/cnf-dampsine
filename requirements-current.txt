@@ -1,0 +1,7 @@
+# Runtime verified on the remote host; not the paper's original environment.
+torch>=2.5,<2.6
+scipy>=1.15,<1.16
+numpy>=2.2,<2.3
+matplotlib>=3.10,<3.11
+PyYAML>=6,<7
+pytest>=9,<10

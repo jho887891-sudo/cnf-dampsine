@@ -1,0 +1,8 @@
+base:
+  sensors: 128
+  observations: 32
+  collocation_interior: 31
+  dense_points: 2048
+  noise: 0.0
+runs: []
+# Add explicit non-training gamma_range entries before running this suite.

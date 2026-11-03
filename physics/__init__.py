@@ -1,0 +1,1 @@
+"""Analytic physics and collocation."""

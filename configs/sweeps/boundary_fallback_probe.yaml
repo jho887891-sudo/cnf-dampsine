@@ -1,0 +1,8 @@
+seed: 42
+sensors: 128
+observations: 32
+collocation_interior: 31
+dense_points: 2048
+noise: 0.0
+omega_range_pi: [6, 6]
+right_bc_degenerate_rel_tol: 0.00000001

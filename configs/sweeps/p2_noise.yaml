@@ -1,0 +1,10 @@
+base:
+  seed: 42
+  sensors: 128
+  observations: 32
+  collocation_interior: 31
+  dense_points: 2048
+sample_count: 20
+runs:
+  - {noise: 0.01}
+  - {noise: 0.05}

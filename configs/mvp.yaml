@@ -1,0 +1,38 @@
+seed: 42
+sensors: 128
+observations: 32
+collocation_interior: 31
+dense_points: 2048
+noise: 0.0
+boundary_mode: dirichlet
+solver: direct_square
+methods:
+  cnf_gaussian:
+    sigma: 0.05
+    n_freqs: 3
+    learn_sigma: false
+    lr: 0.001
+    steps: 5000
+    patience: 500
+    condition_weight: 0.000001
+  cnf_siren:
+    basis: hypernet_siren
+    width: 21
+    hidden_layers: 1
+    omega0: 30
+    lr: 0.0003
+    steps: 5000
+    patience: 500
+  fourier:
+    harmonics: 16
+    frequency_step: pi
+  siren_pinn:
+    width: 64
+    hidden_layers: 3
+    omega0: 30
+    lr: 0.0001
+    steps: 10000
+    patience: 1000
+    lambda_data: 1
+    lambda_ode: 1
+    lambda_bc: 100

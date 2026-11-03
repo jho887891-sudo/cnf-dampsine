@@ -1,0 +1,10 @@
+method: cnf_siren
+basis: hypernet_siren
+K: 33
+M: 31
+width: 21
+hidden_layers: 1
+omega0: 30
+lr: 0.0003
+steps: 5000
+patience: 500
