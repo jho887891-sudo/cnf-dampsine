@@ -3,8 +3,10 @@
 import hashlib
 import json
 from pathlib import Path
+import random
 import statistics
 
+import numpy as np
 import torch
 
 from data.generator import generate_sample
@@ -25,6 +27,11 @@ def train_shared_basis(method, output_dir, *, train_count=800, test_count=100,
         raise ValueError('shared basis supports the two CNF methods')
     if train_count < 1 or test_count < 1 or val_count < 1:
         raise ValueError('all splits must be nonempty')
+    random.seed(split_seed)
+    np.random.seed(split_seed)
+    torch.manual_seed(split_seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(split_seed)
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     if device == 'auto':
