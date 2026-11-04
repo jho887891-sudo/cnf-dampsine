@@ -1,4 +1,4 @@
-"""Inductive shared-basis protocol: train on train curves, freeze on test."""
+"""Inductive shared-basis protocol with frozen validation and test evaluation."""
 
 import hashlib
 import json
@@ -47,20 +47,27 @@ def train_shared_basis(method, output_dir, *, train_count=800, test_count=100,
                 'train_split_hash': digest}, output / 'frozen_basis.pt')
     for parameter in basis.parameters():
         parameter.requires_grad_(False)
-    records = []
     grid = torch.linspace(0, 1, 2048, dtype=torch.float64, device=device)[:, None]
-    for seed in test_seeds:
-        sample = generate_sample(seed=seed)
-        sample = {key: value.to(device) if isinstance(value, torch.Tensor) else value
-                  for key, value in sample.items()}
-        beta, diagnostics = model.solve_beta(sample, interior)
-        with torch.enable_grad():
-            prediction = model(grid, beta) + sample['b']
-            metrics, _ = evaluate_prediction(model, sample, grid, prediction, beta)
-        records.append({'seed': seed, 'parameters': {key: sample[key] for key in ('A','gamma','omega','b')},
-                        'beta': beta.detach().cpu().flatten().tolist(), **diagnostics, **metrics})
-    (output / 'test_results.json').write_text(json.dumps(records, indent=2), encoding='utf-8')
-    return {'train_split_hash': digest, 'test_count': len(records), 'output_dir': str(output)}
+    def evaluate_split(seeds, name):
+        records = []
+        for seed in seeds:
+            sample = generate_sample(seed=seed)
+            sample = {key: value.to(device) if isinstance(value, torch.Tensor) else value
+                      for key, value in sample.items()}
+            beta, diagnostics = model.solve_beta(sample, interior)
+            with torch.enable_grad():
+                prediction = model(grid, beta) + sample['b']
+                metrics, _ = evaluate_prediction(model, sample, grid, prediction, beta)
+            records.append({'seed': seed,
+                            'parameters': {key: sample[key] for key in ('A','gamma','omega','b')},
+                            'beta': beta.detach().cpu().flatten().tolist(), **diagnostics, **metrics})
+        (output / f'{name}_results.json').write_text(json.dumps(records, indent=2), encoding='utf-8')
+        return records
+
+    validation = evaluate_split(val_seeds, 'val')
+    test = evaluate_split(test_seeds, 'test')
+    return {'train_split_hash': digest, 'val_count': len(validation),
+            'test_count': len(test), 'output_dir': str(output)}
 
 
 if __name__ == '__main__':
