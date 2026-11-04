@@ -38,12 +38,29 @@ def train_shared_basis(method, output_dir, *, train_count=800, test_count=100,
     (output / 'split.json').write_text(json.dumps({'train_seeds': train_seeds,
         'val_seeds': val_seeds, 'test_seeds': test_seeds}), encoding='utf-8')
     digest = hashlib.sha256(json.dumps(train_seeds).encode()).hexdigest()
-    for seed in train_seeds:
+    progress_path = output / 'training_progress.pt'
+    expected = {'method': method, 'train_split_hash': digest,
+                'steps_per_curve': steps_per_curve}
+    completed = 0
+    if progress_path.exists():
+        progress = torch.load(progress_path, map_location='cpu', weights_only=False)
+        if any(progress.get(key) != value for key, value in expected.items()):
+            raise ValueError('training checkpoint does not match requested protocol')
+        completed = progress['completed_train_count']
+        if not 0 <= completed <= len(train_seeds):
+            raise ValueError('invalid completed_train_count in checkpoint')
+        basis.load_state_dict(progress['basis'])
+    for index, seed in enumerate(train_seeds[completed:], start=completed):
         sample = generate_sample(seed=seed)
         sample = {key: value.to(device) if isinstance(value, torch.Tensor) else value
                   for key, value in sample.items()}
         train_cnf_sample(model, sample, interior, steps=steps_per_curve,
                          lr=1e-3 if method == 'cnf_gaussian' else 3e-4)
+        progress = {**expected, 'completed_train_count': index + 1,
+                    'basis': {key: value.detach().cpu() for key, value in basis.state_dict().items()}}
+        temporary = output / 'training_progress.tmp'
+        torch.save(progress, temporary)
+        temporary.replace(progress_path)
     torch.save({'basis': {key: value.detach().cpu() for key, value in basis.state_dict().items()},
                 'train_split_hash': digest}, output / 'frozen_basis.pt')
     for parameter in basis.parameters():
