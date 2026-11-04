@@ -3,6 +3,7 @@
 import hashlib
 import json
 from pathlib import Path
+import statistics
 
 import torch
 
@@ -66,6 +67,19 @@ def train_shared_basis(method, output_dir, *, train_count=800, test_count=100,
 
     validation = evaluate_split(val_seeds, 'val')
     test = evaluate_split(test_seeds, 'test')
+    def summarize(records):
+        errors = [row['rmse'] for row in records]
+        return {'count': len(records),
+                'mean_rmse': statistics.mean(errors),
+                'median_rmse': statistics.median(errors),
+                'sd_rmse': statistics.stdev(errors) if len(errors) > 1 else None,
+                'solver_failures': sum(not row.get('solver_ok', True) for row in records),
+                'unstable_condition_count': sum(row.get('condition_number', 0) > 1e10
+                                                for row in records)}
+    (output / 'transfer_summary.json').write_text(json.dumps({
+        'method': method, 'train_count': len(train_seeds), 'train_split_hash': digest,
+        'steps_per_curve': steps_per_curve, 'validation': summarize(validation),
+        'test': summarize(test)}, indent=2), encoding='utf-8')
     return {'train_split_hash': digest, 'val_count': len(validation),
             'test_count': len(test), 'output_dir': str(output)}
 
