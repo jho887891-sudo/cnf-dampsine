@@ -23,7 +23,8 @@ def condition_band(condition_number):
 
 
 def build_report(results_root, output_path):
-    paths = sorted(Path(results_root).rglob('summary.json'))
+    roots = [results_root] if isinstance(results_root, (str, Path)) else list(results_root)
+    paths = sorted({path for root in roots for path in Path(root).rglob('summary.json')})
     groups = {}
     for path in paths:
         row = json.loads(path.read_text(encoding='utf-8'))
@@ -74,7 +75,7 @@ def build_report(results_root, output_path):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('results_root')
+    parser.add_argument('results_root', nargs='+')
     parser.add_argument('--output', default='results/report.md')
     args = parser.parse_args()
     print(build_report(args.results_root, args.output))
