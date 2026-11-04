@@ -9,9 +9,10 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-def report(results_root):
+def report(results_root, prefix='p3_global'):
     root = Path(results_root)
-    dirs = [root / 'p3_global_full', *sorted(root.glob('p3_global_seed*'))]
+    dirs = ([root / 'p3_global_full'] if prefix == 'p3_global' else [])
+    dirs += sorted(root.glob(f'{prefix}_seed*'))
     groups = {}
     for directory in dirs:
         for summary_path in directory.glob('*/transfer_summary.json'):
@@ -45,7 +46,7 @@ def report(results_root):
     ax.legend()
     ax.grid(alpha=.2)
     fig.tight_layout()
-    output = root / 'p3_multiseed'
+    output = root / f'{prefix}_multiseed'
     output.mkdir(parents=True, exist_ok=True)
     fig.savefig(output / 'seed_means.png', dpi=160)
     plt.close(fig)
@@ -57,4 +58,6 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('results_root')
-    print(report(parser.parse_args().results_root))
+    parser.add_argument('--prefix', default='p3_global')
+    args = parser.parse_args()
+    print(report(args.results_root, args.prefix))
