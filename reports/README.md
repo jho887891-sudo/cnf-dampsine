@@ -26,9 +26,13 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
 
 - [Gaussian 20 samples per noise level](p2-noise-gaussian.md)
 - [Fourier 20 samples per noise level](p2-noise-fourier.md)
+- [CNF-SIREN 20 samples per noise level](p2-noise-siren.md)
+- CNF-SIREN noise 0.01: [loss](p2-siren-noise-001-loss.png), [reconstruction](p2-siren-noise-001-reconstruction.png)
+- CNF-SIREN noise 0.05: [loss](p2-siren-noise-005-loss.png), [reconstruction](p2-siren-noise-005-reconstruction.png)
 
-The SIREN full-step noise run is still in progress and will be added after all
-40 samples finish. The OOD analysis remains deferred.
+The SIREN full-step noise run finished all 40 samples. Its pooled mean RMSE
+includes a large outlier; the report retains the per-run conditioning warnings.
+The OOD analysis remains deferred.
 
 ## P3 frozen shared-basis transfer
 
