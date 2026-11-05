@@ -52,6 +52,7 @@ def train_shared_basis(method, output_dir, *, train_count=800, test_count=100,
         if total_steps < train_count:
             raise ValueError('global training must visit every train curve')
         progress_path = output / 'global_training_progress.pt'
+        log_path = output / 'train.log'
         expected = {'method': method, 'train_split_hash': digest, 'total_steps': total_steps}
         optimizer = torch.optim.Adam(basis.parameters(), lr=1e-3 if method == 'cnf_gaussian' else 3e-4)
         completed = 0
@@ -62,6 +63,11 @@ def train_shared_basis(method, output_dir, *, train_count=800, test_count=100,
             completed = progress['completed_steps']
             basis.load_state_dict(progress['basis'])
             optimizer.load_state_dict(progress['optimizer'])
+        retained = []
+        if log_path.exists():
+            retained = [line for line in log_path.read_text().splitlines()
+                        if line.strip() and json.loads(line)['step'] <= completed]
+        log_path.write_text('\n'.join(retained) + ('\n' if retained else ''))
         for step in range(completed, total_steps):
             sample = generate_sample(seed=train_seeds[step % train_count])
             sample = {key: value.to(device) if isinstance(value, torch.Tensor) else value
@@ -75,6 +81,10 @@ def train_shared_basis(method, output_dir, *, train_count=800, test_count=100,
             loss = data + 1e-6 * torch.log(torch.linalg.cond(matrix))
             loss.backward()
             optimizer.step()
+            if (step + 1) % 10 == 0 or step + 1 == total_steps:
+                with log_path.open('a') as log:
+                    log.write(json.dumps({'step': step + 1, 'total': float(loss.detach()),
+                                          'data': float(data.detach())}) + '\n')
             if (step + 1) % 100 == 0 or step + 1 == total_steps:
                 progress = {**expected, 'completed_steps': step + 1,
                             'basis': {k: v.detach().cpu() for k, v in basis.state_dict().items()},
