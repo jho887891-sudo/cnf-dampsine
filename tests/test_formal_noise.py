@@ -27,6 +27,7 @@ def test_disjoint_formal_splits_and_resume(tmp_path, monkeypatch):
     assert len(calls) == 12
     assert {seed for _, seed, _ in calls} == {1_042_000, 1_042_001, 1_042_002,
                                                1_123_000, 1_123_001, 1_123_002}
+    assert yaml.safe_load((root / 'seed42/noise01/sample000/input.yaml').read_text())['device'] == 'auto'
     run_formal_noise.run(config, root, ('fourier',), split_seeds=(42, 123), sample_count=3)
     assert len(calls) == 12
     with pytest.raises(ValueError, match='protocol differs'):

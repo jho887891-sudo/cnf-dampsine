@@ -54,6 +54,7 @@ def run(config_path, output_root, methods, split_seeds=DEFAULT_SPLIT_SEEDS,
     for split_seed, noise, index, seed in iter_cases(split_seeds, sample_count):
         case = root / f'seed{split_seed}' / f'noise{int(noise*100):02d}' / f'sample{index:03d}'
         config = dict(base, seed=seed, noise=noise)
+        config.setdefault('device', 'auto')
         config_file = case / 'input.yaml'
         case.mkdir(parents=True, exist_ok=True)
         if config_file.exists() and yaml.safe_load(config_file.read_text()) != config:
