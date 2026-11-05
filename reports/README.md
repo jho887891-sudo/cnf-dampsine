@@ -7,10 +7,12 @@ experiment host and are excluded from Git by `.gitignore`.
 ## P0
 
 - [Four-method report](p0.md) and [reconstruction comparison](p0-comparison.png)
+- Loss: [Gaussian](p0-gaussian-loss.png), [CNF-SIREN](p0-siren-loss.png), [SIREN-PINN](p0-pinn-loss.png)
 
 ## P1 single-seed scans
 
 - Capacity: [CNF](p1-capacity-cnf.md), [Fourier](p1-capacity-fourier.md), [RMSE plot](p1-capacity-rmse.png)
+- Example loss curves: [K=65 CNF-SIREN](p1-k65-siren-loss.png), [Gaussian σ=0.2](p1-sigma-020-loss.png)
 - Observation count: [Gaussian](p1-observations-gaussian.md), [SIREN](p1-observations-siren.md)
 - Collocation layout: [Gaussian](p1-layout-gaussian.md), [SIREN](p1-layout-siren.md)
 - [Gaussian width](p1-sigma-gaussian.md), [Gaussian encoder](p1-encoder-gaussian.md)
@@ -32,3 +34,6 @@ The SIREN full-step noise run is still in progress and will be added after all
 Each seed uses 800 training, 100 validation, and 100 test curves, with 5,000
 global training steps. Earlier exploratory P3 runs omitted an explicit model
 initialization seed; this report uses only the corrected reproducible runs.
+The P3 global-step runs did not record a per-step loss log; the release assets
+contain frozen checkpoints, split definitions, and per-curve validation/test
+metrics, but no P3 loss curve is claimed.
