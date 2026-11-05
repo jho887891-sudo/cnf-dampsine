@@ -2,7 +2,9 @@
 
 These are compact, versioned snapshots of completed experiment groups. Raw run
 directories, predictions, and model checkpoints remain in `results/` on the
-experiment host and are excluded from Git by `.gitignore`.
+experiment host and are excluded from Git by `.gitignore`. Download the
+[experiment artifact release](https://github.com/jho887891-sudo/cnf-dampsine/releases/tag/experiment-artifacts-2026-11-05)
+for the archived raw data, predictions, logs, figures, and frozen checkpoints.
 
 ## P0
 
