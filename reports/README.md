@@ -37,10 +37,12 @@ The OOD analysis remains deferred.
 ## P3 frozen shared-basis transfer
 
 - [Reproducible five-seed report](p3-repro-multiseed.md) and [seed-level RMSE plot](p3-seed-means.png)
+- [Five-seed rerun with loss logs](p3-logged-multiseed.md), [seed-level RMSE plot](p3-logged-seed-means.png)
+- Representative loss: [Gaussian seed 42](p3-gaussian-seed42-loss.png), [CNF-SIREN seed 42](p3-siren-seed42-loss.png). All ten loss plots and logs are in the artifact ZIP.
 
 Each seed uses 800 training, 100 validation, and 100 test curves, with 5,000
 global training steps. Earlier exploratory P3 runs omitted an explicit model
 initialization seed; this report uses only the corrected reproducible runs.
-The P3 global-step runs did not record a per-step loss log; the release assets
-contain frozen checkpoints, split definitions, and per-curve validation/test
-metrics, but no P3 loss curve is claimed.
+The first P3 global-step runs did not record a per-step loss log. The logged
+five-seed rerun records loss every 10 steps. Its validation and test summaries
+match the first reproducible runs for all ten method/seed pairs.
