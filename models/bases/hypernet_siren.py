@@ -38,7 +38,18 @@ class HypernetSirenBasis(nn.Module):
 
     def forward(self, x):
         generated = self.hypernetwork(self.basis_ids.to(dtype=x.dtype))
-        return torch.cat([self._one_basis(x, flat) for flat in generated], dim=1)
+        params = []
+        cursor = 0
+        for shape in self.shapes:
+            size = math.prod(shape)
+            params.append(generated[:, cursor:cursor + size].reshape((self.num_basis,) + shape))
+            cursor += size
+        state = x.unsqueeze(0).expand(self.num_basis, -1, -1)
+        for layer in range(self.hidden_layers + 1):
+            weight, bias = params[2 * layer:2 * layer + 2]
+            state = torch.sin(self.omega0 * (torch.bmm(state, weight.transpose(1, 2)) + bias[:, None, :]))
+        weight, bias = params[-2:]
+        return (torch.bmm(state, weight.transpose(1, 2)) + bias[:, None, :]).squeeze(-1).transpose(0, 1)
 
     def derivatives(self, x):
         return column_derivatives(self, x)
