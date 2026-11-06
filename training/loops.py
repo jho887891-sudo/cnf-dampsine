@@ -23,10 +23,11 @@ def train_cnf_sample(model, sample, x_interior, *, steps=5000, lr=1e-3,
             sample['gamma'], sample['omega'], sample['q_left'], sample['q_right'],
             boundary_mode, sample['A'] * sample['omega'])
         beta = solve_coefficients(matrix, rhs)
+        condition = torch.linalg.cond(matrix)
         diagnostics = {'solver_residual': float(torch.linalg.vector_norm(matrix @ beta - rhs).detach()),
-                       'condition_number': float(torch.linalg.cond(matrix).detach())}
+                       'condition_number': float(condition.detach())}
         data = (model(sample['x_obs'], beta) - (sample['y_obs'] - sample['b'])).square().mean()
-        loss = data + condition_weight * torch.log(torch.linalg.cond(matrix))
+        loss = data + condition_weight * torch.log(condition)
         loss.backward()
         optimizer.step()
         value = float(loss.detach())
