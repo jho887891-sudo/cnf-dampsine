@@ -40,6 +40,9 @@ The OOD analysis remains deferred.
 - [Seed 42 detail](p2-formal-seed42.md), including representative loss curves
   and high-error reconstructions. The release ZIP contains all 2,000 loss logs
   and figures.
+- [SIREN-PINN 20-curve smoke at each noise level](p2-pinn-noise-smoke.md):
+  [1% loss](p2-pinn-noise-001-loss.png), [5% loss](p2-pinn-noise-005-loss.png).
+  Its five-seed formal run is in progress.
 
 ## P3 frozen shared-basis transfer
 
