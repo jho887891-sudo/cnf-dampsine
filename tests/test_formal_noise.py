@@ -32,3 +32,8 @@ def test_disjoint_formal_splits_and_resume(tmp_path, monkeypatch):
     assert len(calls) == 12
     with pytest.raises(ValueError, match='protocol differs'):
         run_formal_noise.run(config, root, ('fourier',), split_seeds=(42, 123), sample_count=4)
+
+
+def test_clean_main_experiment_uses_only_zero_noise():
+    cases = list(run_formal_noise.iter_cases((42,), 2, (0.0,)))
+    assert cases == [(42, 0.0, 0, 1_042_000), (42, 0.0, 1, 1_042_001)]
