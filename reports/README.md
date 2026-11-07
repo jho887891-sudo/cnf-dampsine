@@ -34,9 +34,12 @@ The SIREN full-step noise run finished all 40 samples. Its pooled mean RMSE
 includes a large outlier; the report retains the per-run conditioning warnings.
 The OOD analysis remains deferred.
 
-- [Formal protocol, split seed 42 (1/5)](p2-formal-seed42.md): 100 curves at
-  each noise level for Gaussian and CNF-SIREN. This is a completed split, not
-  the final five-seed result; high-error fits remain in its statistics.
+- [Formal five-seed P2 report](p2-formal-multiseed.md) and [seed-level RMSE figure](p2-formal-seed-means.png):
+  100 curves per split and noise level for Gaussian and CNF-SIREN. All 2,000
+  runs completed. High-error fits remain in the statistics.
+- [Seed 42 detail](p2-formal-seed42.md), including representative loss curves
+  and high-error reconstructions. The release ZIP contains all 2,000 loss logs
+  and figures.
 
 ## P3 frozen shared-basis transfer
 

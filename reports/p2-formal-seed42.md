@@ -3,8 +3,8 @@
 This completed split contains 100 independent curves at each noise level for
 both CNF-Gaussian and CNF-SIREN. Curve seeds are 1,042,000–1,042,099; the same
 underlying curves are used for the 1% and 5% noise settings. All four groups
-have 100 saved summaries and 100 loss plots. The other four split seeds are
-still running, so this is not the final five-seed estimate.
+have 100 saved summaries and 100 loss plots. The final five-seed estimate is
+in the [formal P2 report](p2-formal-multiseed.md).
 
 | Noise | Method | Valid/100 | Mean RMSE | SD RMSE | Median RMSE | Maximum RMSE | Condition warnings | Numerical failures |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
