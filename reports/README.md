@@ -42,7 +42,10 @@ The OOD analysis remains deferred.
   and figures.
 - [SIREN-PINN 20-curve smoke at each noise level](p2-pinn-noise-smoke.md):
   [1% loss](p2-pinn-noise-001-loss.png), [5% loss](p2-pinn-noise-005-loss.png).
-  Its five-seed formal run is in progress.
+- [SIREN-PINN five-seed formal report](p2-pinn-formal-multiseed.md) and
+  [seed-level RMSE figure](p2-pinn-formal-seed-means.png): 100 curves per
+  split and noise level, 1,000 runs total. Its 1,000 loss logs and figures
+  are in the artifact ZIP.
 
 ## P3 frozen shared-basis transfer
 
