@@ -33,7 +33,13 @@ retain each run. The three SIREN-PINN observation-count scans are valid.
 - [CNF-Gaussian five-seed formal report](p1-clean-gaussian-formal.md) and
   [seed-level RMSE figure](p1-clean-gaussian-seed-means.png): 500/500 valid
   curves with 29 condition warnings. Its raw data and 500 loss plots are in
-  the artifact ZIP. CNF-SIREN and SIREN-PINN formal runs are in progress.
+  the artifact ZIP.
+- [CNF-Gaussian and CNF-SIREN five-seed report](p1-clean-cnf-formal.md) and
+  [seed-level RMSE figure](p1-clean-cnf-seed-means.png), plus
+  [two severe fit outliers](p1-clean-siren-outliers.png): CNF-SIREN has 500/500
+  numerically valid curves, 132 condition warnings, and nine fits with RMSE
+  above 1. Its full loss plots and predictions are in the artifact ZIP.
+  SIREN-PINN formal runs remain in progress.
 
 ## P2 noise
 
