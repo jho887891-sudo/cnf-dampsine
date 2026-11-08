@@ -9,7 +9,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-def report(root):
+def report(root, methods=('cnf_gaussian', 'cnf_siren')):
     root = Path(root)
     protocol = json.loads((root / 'protocol.json').read_text())
     lines = ['# P2 formal noise evaluation', '',
@@ -24,7 +24,7 @@ def report(root):
     fig, ax = plt.subplots(figsize=(8, 4.5))
     for noise in protocol['noise_levels']:
         noise_name = f'noise{int(noise*100):02d}'
-        for method in ('cnf_gaussian', 'cnf_siren'):
+        for method in methods:
             means, all_errors, seeds = [], [], []
             runs = valid_count = warnings = failures = 0
             for seed in protocol['split_seeds']:
@@ -69,5 +69,6 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('root')
+    parser.add_argument('--methods', nargs='+', default=['cnf_gaussian', 'cnf_siren'])
     args = parser.parse_args()
-    print(report(args.root))
+    print(report(args.root, args.methods))
