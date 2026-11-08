@@ -16,11 +16,17 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
 
 - Capacity: [CNF](p1-capacity-cnf.md), [Fourier](p1-capacity-fourier.md), [RMSE plot](p1-capacity-rmse.png)
 - Example loss curves: [K=65 CNF-SIREN](p1-k65-siren-loss.png), [Gaussian σ=0.2](p1-sigma-020-loss.png)
-- Observation count: [Gaussian](p1-observations-gaussian.md), [SIREN](p1-observations-siren.md)
-- Collocation layout: [Gaussian](p1-layout-gaussian.md), [SIREN](p1-layout-siren.md)
+- Observation count: [Gaussian](p1-observations-gaussian.md), [SIREN](p1-observations-siren.md),
+  [SIREN-PINN](p1-observations-pinn.md), [Fourier](p1-observations-fourier.md)
+- Collocation layout: [Gaussian](p1-layout-gaussian.md), [SIREN](p1-layout-siren.md),
+  [Fourier](p1-layout-fourier.md)
 - [Gaussian width](p1-sigma-gaussian.md), [Gaussian encoder](p1-encoder-gaussian.md)
 - [SIREN basis family](p1-basis-family.md), [SIREN frequency scale](p1-omega.md)
 - [Fourier rectangular systems](p1-rectangular-fourier.md)
+
+The three Fourier observation-count scans and three layout scans are all
+numerically unstable by the specified condition threshold; their reports
+retain each run. The three SIREN-PINN observation-count scans are valid.
 
 ## P1 clean main configuration
 
