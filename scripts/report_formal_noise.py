@@ -1,4 +1,4 @@
-"""Summarize completed P2 noise splits without hiding poor fits or failures."""
+"""Summarize completed formal splits without hiding poor fits or failures."""
 
 import json
 from pathlib import Path
@@ -12,12 +12,19 @@ import matplotlib.pyplot as plt
 def report(root, methods=('cnf_gaussian', 'cnf_siren')):
     root = Path(root)
     protocol = json.loads((root / 'protocol.json').read_text())
-    lines = ['# P2 formal noise evaluation', '',
-             'Five independent split seeds; 100 curves per noise level and method in each split.',
-             'The same curve seeds are used across noise levels within a split.',
+    clean = all(noise == 0 for noise in protocol['noise_levels'])
+    title = '# P1 formal clean evaluation' if clean else '# P2 formal noise evaluation'
+    count = protocol['sample_count_per_noise']
+    curve_word = 'curve' if count == 1 else 'curves'
+    sample_description = (f'{count} clean {curve_word} per method in each split.' if clean else
+                          f'{count} {curve_word} per noise level and method in each split.')
+    lines = [title, '',
+             f'{len(protocol["split_seeds"])} independent split seeds; {sample_description}',
              'Every saved run is counted. High-error fits remain in the mean and maximum.', '',
              '| Noise | Method | Splits complete | Runs | Valid | Mean of split means | SD of split means | Pooled median RMSE | Max RMSE | Warnings | Numerical failures |',
              '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |']
+    if not clean:
+        lines.insert(3, 'The same curve seeds are used across noise levels within a split.')
     detail = ['## Per-split results', '',
               '| Split seed | Noise | Method | Runs | Valid | Mean RMSE | Median RMSE | Max RMSE | Warnings | Numerical failures |',
               '| ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |']

@@ -6,6 +6,7 @@ import pytest
 import yaml
 
 from scripts import run_formal_noise
+from scripts.report_formal_noise import report
 
 
 def test_disjoint_formal_splits_and_resume(tmp_path, monkeypatch):
@@ -37,3 +38,16 @@ def test_disjoint_formal_splits_and_resume(tmp_path, monkeypatch):
 def test_clean_main_experiment_uses_only_zero_noise():
     cases = list(run_formal_noise.iter_cases((42,), 2, (0.0,)))
     assert cases == [(42, 0.0, 0, 1_042_000), (42, 0.0, 1, 1_042_001)]
+
+
+def test_clean_formal_report_is_labeled_p1(tmp_path):
+    (tmp_path / 'protocol.json').write_text(json.dumps({
+        'noise_levels': [0.0], 'split_seeds': [42], 'sample_count_per_noise': 1}))
+    sample = tmp_path / 'seed42/noise00/sample000/cnf_gaussian'
+    sample.mkdir(parents=True)
+    (sample / 'summary.json').write_text(json.dumps({'status': 'ok', 'rmse': 0.1}))
+    output = report(tmp_path, methods=('cnf_gaussian',)).read_text()
+    assert output.startswith('# P1 formal clean evaluation')
+    assert '1 clean curve per method' in output
+    assert 'across noise levels' not in output
+    assert '| 0% | cnf_gaussian | 1/1 | 1 | 1 |' in output
