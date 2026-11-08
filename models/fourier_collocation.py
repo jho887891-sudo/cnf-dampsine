@@ -47,7 +47,8 @@ class FourierCollocation(nn.Module):
             equilibrated_solve=bool(equilibrate),
             hard_residual_max=float(residual.abs().max()) if finite_residual else float('nan'),
             collocation_ode_rms=float(residual[:-2].square().mean().sqrt()) if finite_residual else float('nan'),
-            **scale_info, **rectangle)
+            **scale_info)
+        diagnostics.update(rectangle)
         return beta, diagnostics
 
     @staticmethod

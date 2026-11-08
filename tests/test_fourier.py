@@ -112,3 +112,17 @@ def test_order_sweep_stays_square_and_full_rank():
         assert diagnostics['full_rank'] is True
         assert diagnostics['solver_ok'] is True
         assert beta.shape == (1 + 2 * harmonics, 1)
+
+
+def test_rectangular_fourier_reports_both_solver_branches():
+    sample = generate_sample(seed=42)
+    model = FourierCollocation()
+    for interior, solver in ((15, 'minimum_norm_underdetermined'),
+                             (63, 'least_squares_overdetermined')):
+        beta, diagnostics = model.solve(
+            sample, chebyshev_interior(interior), rectangular_extension=True)
+        assert beta.shape == (33, 1)
+        assert diagnostics['matrix_shape'] == [interior + 2, 33]
+        assert diagnostics['solver'] == solver
+        assert isinstance(diagnostics['hard_feasible'], bool)
+        assert math.isfinite(diagnostics['hard_residual_max'])

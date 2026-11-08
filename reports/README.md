@@ -22,6 +22,13 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
 - [SIREN basis family](p1-basis-family.md), [SIREN frequency scale](p1-omega.md)
 - [Fourier rectangular systems](p1-rectangular-fourier.md)
 
+## P1 clean main configuration
+
+- [CNF-Gaussian five-seed formal report](p1-clean-gaussian-formal.md) and
+  [seed-level RMSE figure](p1-clean-gaussian-seed-means.png): 500/500 valid
+  curves with 29 condition warnings. Its raw data and 500 loss plots are in
+  the artifact ZIP. CNF-SIREN and SIREN-PINN formal runs are in progress.
+
 ## P2 noise
 
 - [Gaussian 20 samples per noise level](p2-noise-gaussian.md)
