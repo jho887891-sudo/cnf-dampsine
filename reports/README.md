@@ -39,7 +39,10 @@ retain each run. The three SIREN-PINN observation-count scans are valid.
   [two severe fit outliers](p1-clean-siren-outliers.png): CNF-SIREN has 500/500
   numerically valid curves, 132 condition warnings, and nine fits with RMSE
   above 1. Its full loss plots and predictions are in the artifact ZIP.
-  SIREN-PINN formal runs remain in progress.
+- [All three methods, five-seed formal report](p1-clean-formal-all.md) and
+  [seed-level RMSE figure](p1-clean-formal-all.png): SIREN-PINN finished
+  500/500 numerically valid curves with no condition warnings. Its 500 loss
+  plots and predictions are in the artifact ZIP.
 
 ## P2 noise
 
