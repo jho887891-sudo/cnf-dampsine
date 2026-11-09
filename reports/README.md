@@ -23,6 +23,8 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
 - [Gaussian width](p1-sigma-gaussian.md), [Gaussian encoder](p1-encoder-gaussian.md)
 - [SIREN basis family](p1-basis-family.md), [SIREN frequency scale](p1-omega.md)
 - [Fourier rectangular systems](p1-rectangular-fourier.md)
+- [SIREN-PINN collocation density](p1-rectangular-pinn.md): M=15/31/63
+  on one clean curve, using soft ODE loss.
 
 The three Fourier observation-count scans and three layout scans are all
 numerically unstable by the specified condition threshold; their reports
