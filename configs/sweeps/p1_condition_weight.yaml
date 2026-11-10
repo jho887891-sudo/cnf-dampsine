@@ -1,0 +1,9 @@
+base:
+  seed: 42
+  collocation_interior: 31
+  selected_methods: cnf_gaussian
+runs:
+  - {methods: {cnf_gaussian: {condition_weight: 0}}}
+  - {methods: {cnf_gaussian: {condition_weight: 1.0e-8}}}
+  - {methods: {cnf_gaussian: {condition_weight: 1.0e-6}}}
+  - {methods: {cnf_gaussian: {condition_weight: 1.0e-4}}}

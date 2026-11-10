@@ -1,0 +1,8 @@
+base:
+  seed: 42
+  collocation_interior: 31
+  selected_methods: fourier
+runs:
+  - {methods: {fourier: {frequency_step: 1.5707963267948966}}}
+  - {methods: {fourier: {frequency_step: 3.141592653589793}}}
+  - {methods: {fourier: {frequency_step: 6.283185307179586}}}
