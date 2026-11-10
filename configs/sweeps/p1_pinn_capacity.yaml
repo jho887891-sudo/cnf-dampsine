@@ -1,0 +1,14 @@
+base:
+  seed: 42
+  collocation_interior: 31
+  selected_methods: siren_pinn
+runs:
+  - {methods: {siren_pinn: {width: 32, hidden_layers: 3}}}
+  - {methods: {siren_pinn: {width: 64, hidden_layers: 3}}}
+  - {methods: {siren_pinn: {width: 128, hidden_layers: 3}}}
+  - {methods: {siren_pinn: {width: 64, hidden_layers: 2}}}
+  - {methods: {siren_pinn: {width: 64, hidden_layers: 4}}}
+  - {methods: {siren_pinn: {lambda_ode: 0.1}}}
+  - {methods: {siren_pinn: {lambda_ode: 1}}}
+  - {methods: {siren_pinn: {lambda_ode: 10}}}
+  - {methods: {siren_pinn: {lambda_ode: 100}}}

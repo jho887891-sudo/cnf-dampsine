@@ -1,0 +1,6 @@
+base:
+  seed: 42
+  collocation_interior: 31
+  selected_methods: cnf_gaussian
+runs:
+  - {methods: {cnf_gaussian: {sigma: 0.05, learn_sigma: true}}}

@@ -1,0 +1,10 @@
+base:
+  seed: 42
+  collocation_interior: 31
+  selected_methods: cnf_siren
+runs:
+  - {methods: {cnf_siren: {width: 21, hidden_layers: 1}}}
+  - {methods: {cnf_siren: {width: 32, hidden_layers: 1}}}
+  - {methods: {cnf_siren: {width: 64, hidden_layers: 1}}}
+  - {methods: {cnf_siren: {width: 21, hidden_layers: 2}}}
+  - {methods: {cnf_siren: {width: 21, hidden_layers: 3}}}
