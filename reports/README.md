@@ -25,6 +25,8 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
   [Fourier](p1-layout-fourier.md)
 - [Gaussian width](p1-sigma-gaussian.md), [Gaussian encoder](p1-encoder-gaussian.md)
 - [Gaussian learned-sigma ablation](p1-learn-sigma-full.md)
+- [Gaussian condition-weight ablation](p1-condition-weight-detail.md)
+- [Fourier frequency-step ablation](p1-fourier-frequency-step.md)
 - [SIREN basis family](p1-basis-family.md), [SIREN frequency scale](p1-omega.md)
 - [CNF-SIREN width and depth scan](p1-siren-capacity-full.md)
 - [SIREN-PINN width, depth and ODE-weight scans](p1-pinn-capacity-full.md)
