@@ -1,5 +1,8 @@
 # CNF-DampSine experiment reports
 
+[Non-OOD synthesis and figure audit](non-ood-final.md) summarizes the completed
+experiments, failure labels, and the SPEC diagnostic figure set.
+
 These are compact, versioned snapshots of completed experiment groups. Raw run
 directories, predictions, and model checkpoints remain in `results/` on the
 experiment host and are excluded from Git by `.gitignore`. Download the
