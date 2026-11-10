@@ -102,9 +102,9 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
                     rectangular_extension=config.get('rectangular_extension', False), boundary_mode=boundary_mode)
                 prediction = model.predict(grid, beta, sample['b'])
             elif name in ('cnf_gaussian', 'cnf_siren'):
-                if k != m + 2:
-                    raise ValueError('rectangular CNF basis training is not implemented; use separate extension')
-                anchors = torch.cat((collocation, torch.tensor([[0.0], [1.0]], dtype=torch.float64, device=device)))
+                anchor_interior = (collocation if k == m + 2 else
+                                   chebyshev_interior(k - 2).to(device))
+                anchors = torch.cat((anchor_interior, torch.tensor([[0.0], [1.0]], dtype=torch.float64, device=device)))
                 if name == 'cnf_gaussian':
                     basis = GaussianKernelBasis(anchors, sigma=method_config.get('sigma', 0.05),
                         n_freqs=method_config.get('n_freqs', 3), learn_sigma=method_config.get('learn_sigma', False),
@@ -122,8 +122,10 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
                     steps=steps_override or method_config.get('steps', 5000),
                     lr=method_config.get('lr', 1e-3 if name == 'cnf_gaussian' else 3e-4),
                     patience=method_config.get('patience', 500),
-                    condition_weight=method_config.get('condition_weight', 1e-6), boundary_mode=boundary_mode)
-                beta, diagnostics = model.solve_beta(sample, collocation, boundary_mode=boundary_mode)
+                    condition_weight=method_config.get('condition_weight', 1e-6), boundary_mode=boundary_mode,
+                    rectangular_extension=config.get('rectangular_extension', False))
+                beta, diagnostics = model.solve_beta(sample, collocation, boundary_mode=boundary_mode,
+                    rectangular_extension=config.get('rectangular_extension', False))
                 prediction = model(grid, beta) + sample['b']
                 record['history_steps'] = len(history)
             elif name == 'siren_pinn':

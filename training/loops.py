@@ -6,13 +6,16 @@ import torch
 from models.siren_pinn import siren_pinn_loss
 from physics.constraints import build_hard_constraint_system
 from solvers.differentiable_solve import solve_coefficients
+from solvers.rectangular import rectangular_coefficients
 
 
 def train_cnf_sample(model, sample, x_interior, *, steps=5000, lr=1e-3,
-                     condition_weight=1e-6, patience=500, boundary_mode='dirichlet'):
+                     condition_weight=1e-6, patience=500, boundary_mode='dirichlet',
+                     rectangular_extension=False):
     parameters = [p for p in model.basis.parameters() if p.requires_grad]
     if not parameters:
-        beta, diagnostics = model.solve_beta(sample, x_interior, boundary_mode)
+        beta, diagnostics = model.solve_beta(sample, x_interior, boundary_mode,
+                                             rectangular_extension)
         data = float((model(sample['x_obs'], beta) - (sample['y_obs'] - sample['b'])).square().mean())
         return model, [{'step': 0, 'total': data, 'data': data, **diagnostics}]
     optimizer = torch.optim.Adam(parameters, lr=lr)
@@ -22,7 +25,12 @@ def train_cnf_sample(model, sample, x_interior, *, steps=5000, lr=1e-3,
         matrix, rhs = build_hard_constraint_system(model.basis, x_interior,
             sample['gamma'], sample['omega'], sample['q_left'], sample['q_right'],
             boundary_mode, sample['A'] * sample['omega'])
-        beta = solve_coefficients(matrix, rhs)
+        if matrix.shape[0] != matrix.shape[1]:
+            if not rectangular_extension:
+                raise ValueError('rectangular CNF requires explicit extension flag')
+            beta, _ = rectangular_coefficients(matrix, rhs)
+        else:
+            beta = solve_coefficients(matrix, rhs)
         condition = torch.linalg.cond(matrix)
         diagnostics = {'solver_residual': float(torch.linalg.vector_norm(matrix @ beta - rhs).detach()),
                        'condition_number': float(condition.detach())}
