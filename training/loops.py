@@ -7,6 +7,7 @@ from models.siren_pinn import siren_pinn_loss
 from physics.constraints import build_hard_constraint_system
 from solvers.differentiable_solve import solve_coefficients
 from solvers.rectangular import rectangular_coefficients
+from solvers.tikhonov import solve_tikhonov
 
 
 def train_cnf_sample(model, sample, x_interior, *, steps=5000, lr=1e-3,
@@ -25,7 +26,9 @@ def train_cnf_sample(model, sample, x_interior, *, steps=5000, lr=1e-3,
         matrix, rhs = build_hard_constraint_system(model.basis, x_interior,
             sample['gamma'], sample['omega'], sample['q_left'], sample['q_right'],
             boundary_mode, sample['A'] * sample['omega'])
-        if matrix.shape[0] != matrix.shape[1]:
+        if model.ridge_lambda is not None:
+            beta = solve_tikhonov(matrix, rhs, model.ridge_lambda)
+        elif matrix.shape[0] != matrix.shape[1]:
             if not rectangular_extension:
                 raise ValueError('rectangular CNF requires explicit extension flag')
             beta, _ = rectangular_coefficients(matrix, rhs)

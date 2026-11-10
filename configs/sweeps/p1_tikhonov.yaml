@@ -1,0 +1,9 @@
+base:
+  seed: 42
+  collocation_interior: 31
+  selected_methods: cnf_tikhonov
+runs:
+  - {methods: {cnf_tikhonov: {ridge_lambda: 1.0e-10}}}
+  - {methods: {cnf_tikhonov: {ridge_lambda: 1.0e-8}}}
+  - {methods: {cnf_tikhonov: {ridge_lambda: 1.0e-6}}}
+  - {methods: {cnf_tikhonov: {ridge_lambda: 1.0e-4}}}

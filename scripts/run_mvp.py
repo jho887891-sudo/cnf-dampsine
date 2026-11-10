@@ -81,8 +81,10 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
                   'point_layout': layout,
                   'device': str(device),
                   'boundary_mode': boundary_mode,
-                  'constraint_system': 'rectangular_extension' if k != m + 2 else 'square_main',
-                  'parameters_known': True, 'constraints': 'hard' if name != 'siren_pinn' else 'soft'}
+                  'constraint_system': ('tikhonov_ablation' if name == 'cnf_tikhonov' else
+                      'rectangular_extension' if k != m + 2 else 'square_main'),
+                  'parameters_known': True, 'constraints': ('regularized' if name == 'cnf_tikhonov' else
+                      'soft' if name == 'siren_pinn' else 'hard')}
         record['physics_parameters'] = {key: sample[key] for key in ('A', 'gamma', 'omega', 'b')}
         try:
             started = time.perf_counter()
@@ -102,11 +104,11 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
                 beta, diagnostics = model.solve(sample, collocation,
                     rectangular_extension=config.get('rectangular_extension', False), boundary_mode=boundary_mode)
                 prediction = model.predict(grid, beta, sample['b'])
-            elif name in ('cnf_gaussian', 'cnf_siren'):
+            elif name in ('cnf_gaussian', 'cnf_siren', 'cnf_tikhonov'):
                 anchor_interior = (collocation if k == m + 2 else
                                    chebyshev_interior(k - 2).to(device))
                 anchors = torch.cat((anchor_interior, torch.tensor([[0.0], [1.0]], dtype=torch.float64, device=device)))
-                if name == 'cnf_gaussian':
+                if name in ('cnf_gaussian', 'cnf_tikhonov'):
                     basis = GaussianKernelBasis(anchors, sigma=method_config.get('sigma', 0.05),
                         n_freqs=method_config.get('n_freqs', 3), learn_sigma=method_config.get('learn_sigma', False),
                         identity_encoder=method_config.get('identity_encoder', False))
@@ -118,10 +120,13 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
                         raise ValueError(f'unknown CNF-SIREN basis: {basis_type}')
                     basis = basis_class(num_basis=k, width=method_config.get('width', 21),
                         hidden_layers=method_config.get('hidden_layers', 1), omega0=method_config.get('omega0', 30))
-                model = CNFModel(basis).to(device=device, dtype=torch.float64)
+                ridge_lambda = method_config.get('ridge_lambda') if name == 'cnf_tikhonov' else None
+                if name == 'cnf_tikhonov' and ridge_lambda is None:
+                    raise ValueError('cnf_tikhonov requires ridge_lambda')
+                model = CNFModel(basis, ridge_lambda=ridge_lambda).to(device=device, dtype=torch.float64)
                 model, history = train_cnf_sample(model, sample, collocation,
                     steps=steps_override or method_config.get('steps', 5000),
-                    lr=method_config.get('lr', 1e-3 if name == 'cnf_gaussian' else 3e-4),
+                    lr=method_config.get('lr', 1e-3 if name in ('cnf_gaussian', 'cnf_tikhonov') else 3e-4),
                     patience=method_config.get('patience', 500),
                     condition_weight=method_config.get('condition_weight', 1e-6), boundary_mode=boundary_mode,
                     rectangular_extension=config.get('rectangular_extension', False))
@@ -147,7 +152,9 @@ def run_mvp(methods='all', output_root='results', steps_override=None, config_pa
             truth = sample['A'] * torch.exp(-sample['gamma']*grid) * torch.sin(sample['omega']*grid) + sample['b']
             condition = diagnostics.get('condition_number')
             condition_state = diagnostics.get('condition_status') or condition_status(condition)
-            if diagnostics.get('solver_ok') is False:
+            if name == 'cnf_tikhonov' and condition_state not in ('unstable', 'severe'):
+                status = 'regularized'
+            elif diagnostics.get('solver_ok') is False:
                 status = 'failed'
             elif diagnostics.get('hard_feasible') is False:
                 status = 'infeasible'

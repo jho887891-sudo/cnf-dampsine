@@ -7,12 +7,14 @@ from torch import nn
 from physics.constraints import build_hard_constraint_system
 from solvers.differentiable_solve import solve_coefficients
 from solvers.rectangular import solve_rectangular
+from solvers.tikhonov import solve_tikhonov
 
 
 class CNFModel(nn.Module):
-    def __init__(self, basis):
+    def __init__(self, basis, ridge_lambda=None):
         super().__init__()
         self.basis = basis
+        self.ridge_lambda = ridge_lambda
 
     def solve_beta(self, sample, x_interior, boundary_mode='dirichlet',
                    rectangular_extension=False):
@@ -21,7 +23,9 @@ class CNFModel(nn.Module):
             sample['q_left'], sample['q_right'], boundary_mode,
             sample['A'] * sample['omega'])
         start = time.perf_counter()
-        if matrix.shape[0] != matrix.shape[1]:
+        if self.ridge_lambda is not None:
+            beta, rectangle = solve_tikhonov(matrix, rhs, self.ridge_lambda), {}
+        elif matrix.shape[0] != matrix.shape[1]:
             if not rectangular_extension:
                 raise ValueError('rectangular CNF requires explicit extension flag')
             beta, rectangle = solve_rectangular(matrix, rhs)
@@ -37,6 +41,8 @@ class CNFModel(nn.Module):
                       'collocation_ode_rms': float(residual[:-2].square().mean().sqrt()),
                       'solver_time_seconds': elapsed}
         diagnostics.update(rectangle)
+        if self.ridge_lambda is not None:
+            diagnostics['regularization_lambda'] = self.ridge_lambda
         return beta, diagnostics
 
     def forward(self, x, beta):

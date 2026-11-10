@@ -28,6 +28,7 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
 - [Gaussian condition-weight ablation](p1-condition-weight-detail.md)
 - [Fourier frequency-step ablation](p1-fourier-frequency-step.md)
 - [Fourier 24π and 40π pressure test](p1-fourier-pressure-detail.md)
+- [Separate CNF-Tikhonov diagnostic ablation](p1-tikhonov.md)
 - [SIREN basis family](p1-basis-family.md), [SIREN frequency scale](p1-omega.md)
 - [CNF-SIREN width and depth scan](p1-siren-capacity-full.md)
 - [SIREN-PINN width, depth and ODE-weight scans](p1-pinn-capacity-full.md)
