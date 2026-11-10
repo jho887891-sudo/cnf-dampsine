@@ -23,6 +23,8 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
 - [Gaussian width](p1-sigma-gaussian.md), [Gaussian encoder](p1-encoder-gaussian.md)
 - [SIREN basis family](p1-basis-family.md), [SIREN frequency scale](p1-omega.md)
 - [Fourier rectangular systems](p1-rectangular-fourier.md)
+- [CNF fixed-K collocation density](p1-rectangular-cnf.md): M=15/31/63
+  for Gaussian and SIREN; both M=63 least-squares fits are infeasible.
 - [SIREN-PINN collocation density](p1-rectangular-pinn.md): M=15/31/63
   on one clean curve, using soft ODE loss.
 
