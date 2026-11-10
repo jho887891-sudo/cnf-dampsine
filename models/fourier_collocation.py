@@ -17,9 +17,9 @@ from solvers.differentiable_solve import equilibration_factors
 
 
 class FourierCollocation(nn.Module):
-    def __init__(self, harmonics=16, frequency_step=None, equilibrate=False):
+    def __init__(self, harmonics=16, frequency_step=None, equilibrate=False, frequency_indices=None):
         super().__init__()
-        self.basis = FourierBasis(harmonics, frequency_step) if frequency_step is not None else FourierBasis(harmonics)
+        self.basis = FourierBasis(harmonics, frequency_step or math.pi, frequency_indices)
         self.equilibrate = equilibrate
 
     def solve(self, sample, x_interior, rectangular_extension=False, boundary_mode='dirichlet',

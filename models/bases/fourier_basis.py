@@ -6,9 +6,11 @@ from torch import nn
 
 
 class FourierBasis(nn.Module):
-    def __init__(self, harmonics=16, frequency_step=math.pi):
+    def __init__(self, harmonics=16, frequency_step=math.pi, frequency_indices=None):
         super().__init__()
-        self.frequencies = tuple(range(1, harmonics + 1))
+        self.frequencies = tuple(range(1, harmonics + 1)) if frequency_indices is None else tuple(frequency_indices)
+        if len(self.frequencies) != harmonics or any(not isinstance(n, int) or n < 1 for n in self.frequencies) or len(set(self.frequencies)) != harmonics:
+            raise ValueError('frequency_indices must contain distinct positive integer harmonics')
         self.frequency_step = frequency_step
 
     def derivatives(self, x):

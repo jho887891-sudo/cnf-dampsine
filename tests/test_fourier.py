@@ -21,6 +21,20 @@ def test_fourier_basis_and_derivatives():
     assert basis.frequencies == tuple(range(1, 17))
 
 
+def test_fourier_fixed_width_pressure_pool():
+    for last in (24, 40):
+        frequencies = list(range(1, 16)) + [last]
+        model = FourierCollocation(frequency_indices=frequencies)
+        assert model.basis.frequencies == tuple(frequencies)
+        assert model.basis(torch.tensor([[0.25]], dtype=torch.float64)).shape == (1, 33)
+    try:
+        FourierBasis(frequency_indices=[1] * 16)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('duplicate frequencies must be rejected')
+
+
 def test_fourier_collocation_solves_same_physics_without_optimizer():
     sample = generate_sample(seed=42)
     model = FourierCollocation()
