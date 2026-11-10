@@ -24,6 +24,7 @@ For a single download, use the [all-in-one ZIP](https://github.com/jho887891-sud
 - [Gaussian learned-sigma ablation](p1-learn-sigma-full.md)
 - [SIREN basis family](p1-basis-family.md), [SIREN frequency scale](p1-omega.md)
 - [CNF-SIREN width and depth scan](p1-siren-capacity-full.md)
+- [SIREN-PINN width, depth and ODE-weight scans](p1-pinn-capacity-full.md)
 - [Fourier rectangular systems](p1-rectangular-fourier.md)
 - [CNF fixed-K collocation density](p1-rectangular-cnf.md): M=15/31/63
   for Gaussian and SIREN; both M=63 least-squares fits are infeasible.
